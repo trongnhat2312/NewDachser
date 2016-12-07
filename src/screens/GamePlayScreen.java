@@ -22,12 +22,16 @@ import java.io.IOException;
  */
 public class GamePlayScreen extends Screen {
     private GameWindow gameWindow;
-    private BufferedImage background, backBtn;
-    private Rectangle backRect, backgroundRect;
+    private BufferedImage background, backBtn, pauseBtn, gameoverImg;
+    private Rectangle backRect, backgroundRect, pauseRect;
 
     private GamePlayManager gamePlayManager;
 
     private int timeLeft;
+    private boolean isPaused = false;
+    private boolean isWon = false;
+
+
     private int highScore = 100;
     private static final int fps = 60;
     private int thisFPS = 0;
@@ -46,6 +50,7 @@ public class GamePlayScreen extends Screen {
     private void makeRect() {
         backgroundRect = new Rectangle(8, 31, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
         backRect = new Rectangle(1220, pointO.y, this.buttonSize.width, this.buttonSize.height);
+        pauseRect = new Rectangle(1000, pointO.y,this.buttonSize.width, this.buttonSize.height);
 
     }
 
@@ -73,8 +78,12 @@ public class GamePlayScreen extends Screen {
     private void loadImage() {
         try {
             background = ImageIO.read(new File("resource/Image/play_background.png"));
+            gameoverImg = ImageIO.read(new File("resource/menu button/gameover_icon.png"));
             backBtn = ImageIO.read(new File("resource/Create map button/Button_back.png"));
+            pauseBtn = ImageIO.read(new File("resource/menu button/pause.png"));
 
+
+            pauseBtn = setSize(pauseBtn,this.buttonSize);
             backBtn = setSize(backBtn, this.buttonSize);
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,32 +91,45 @@ public class GamePlayScreen extends Screen {
 
     }
 
+    private void switchPauseState(){
+        if (isPaused) isPaused = false;
+        else isPaused = true;
+    }
 
     @Override
     public void update() {
-        for (Conveyor[] conveyorArray : gamePlayManager.conveyor) {
-            for (Conveyor conveyor : conveyorArray) {
-                conveyor.update();
+        if (!isPaused&&!isWon) {
+            for (Conveyor[] conveyorArray : gamePlayManager.conveyor) {
+                for (Conveyor conveyor : conveyorArray) {
+                    conveyor.update();
+                }
             }
-        }
-        thisFPS += 1;
-        if (thisFPS >= fps) {
-            thisFPS = 0;
-            timeLeft--;
-        }
+            thisFPS += 1;
+            if (thisFPS >= fps) {
+                thisFPS = 0;
+                if (timeLeft>0) timeLeft--;
+
+            }
+
+
 //        for (ConveyorSwitch conveyorSwitch : gamePlayManager.conveyorSwitchList) {
 //            conveyorSwitch.update();
 //        }
 
 //        System.out.println(gamePlayManager.box1.getDirection());
 //        gamePlayManager.box1.movebyDirection();
-        gamePlayManager.makeBox();
-        if (!gamePlayManager.boxOnMapList.isEmpty()) {
-            for (Box b : gamePlayManager.boxOnMapList) {
-                gamePlayManager.updateDirectionForBox(b);
-                b.movebyDirection();
+            gamePlayManager.makeBox();
+            if (!gamePlayManager.boxOnMapList.isEmpty()) {
+                for (Box b : gamePlayManager.boxOnMapList) {
+                    gamePlayManager.updateDirectionForBox(b);
+                    b.movebyDirection();
+                }
+                gamePlayManager.checkBoxToEnd();
             }
-            gamePlayManager.checkBoxToEnd();
+
+
+            if (gamePlayManager.completedBoxes ==gamePlayManager.numberOfBoxes)
+                isWon = true;
         }
 
 
@@ -131,54 +153,71 @@ public class GamePlayScreen extends Screen {
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, backgroundRect.x, backgroundRect.y, null);
-
-        for (int sum = 15; sum < 60; sum++) {
-            for (int i = 0; i <= sum; i++) {
-                int j = sum - i;
-                if (i <= 35 && j <= 35) {
-                    LogicPoint lp = new LogicPoint(i, j);
-                    Point p = lp.convertToPoint();
-                    if (gamePlayManager.getDirectionFromMapCode(gamePlayManager.map[i][j]) != Direction.NONE) {
-                        gamePlayManager.conveyor[i][j].draw(g);
+        if (timeLeft!=0) {
+            if(!isWon) {
+                if (!isPaused) {
+                    for (int sum = 15; sum < 60; sum++) {
+                        for (int i = 0; i <= sum; i++) {
+                            int j = sum - i;
+                            if (i <= 35 && j <= 35) {
+                                LogicPoint lp = new LogicPoint(i, j);
+                                Point p = lp.convertToPoint();
+                                if (gamePlayManager.getDirectionFromMapCode(gamePlayManager.map[i][j]) != Direction.NONE) {
+                                    gamePlayManager.conveyor[i][j].draw(g);
+                                }
+                                switch (gamePlayManager.map[i][j]) {
+                                    case MapCodeConst.PLANE:
+                                        g.drawImage(gamePlayManager.plane, p.x, p.y, null);
+                                        break;
+                                    case MapCodeConst.TRUCK:
+                                        g.drawImage(gamePlayManager.truck, p.x, p.y, null);
+                                        break;
+                                    case MapCodeConst.SHIP:
+                                        g.drawImage(gamePlayManager.ship, p.x, p.y, null);
+                                        break;
+                                    case MapCodeConst.TREE:
+                                        g.drawImage(gamePlayManager.tree, p.x, p.y, null);
+                                        break;
+                                    case MapCodeConst.TREE_1:
+                                        g.drawImage(gamePlayManager.tree1, p.x, p.y, null);
+                                        break;
+                                    case MapCodeConst.WATER:
+                                        g.drawImage(gamePlayManager.water, p.x, p.y, null);
+                                        break;
+                                    case MapCodeConst.ROAD:
+                                        g.drawImage(gamePlayManager.road, p.x, p.y, null);
+                                        break;
+                                    case MapCodeConst.SOURCE:
+                                        g.drawImage(gamePlayManager.source, p.x - 72, p.y + 18, null);
+                                        break;
+                                }
+                            }
+                        }
                     }
-                    switch (gamePlayManager.map[i][j]) {
-                        case MapCodeConst.PLANE:
-                            g.drawImage(gamePlayManager.plane, p.x, p.y, null);
-                            break;
-                        case MapCodeConst.TRUCK:
-                            g.drawImage(gamePlayManager.truck, p.x, p.y, null);
-                            break;
-                        case MapCodeConst.SHIP:
-                            g.drawImage(gamePlayManager.ship, p.x, p.y, null);
-                            break;
-                        case MapCodeConst.TREE:
-                            g.drawImage(gamePlayManager.tree, p.x, p.y, null);
-                            break;
-                        case MapCodeConst.TREE_1:
-                            g.drawImage(gamePlayManager.tree1, p.x, p.y, null);
-                            break;
-                        case MapCodeConst.WATER:
-                            g.drawImage(gamePlayManager.water, p.x, p.y, null);
-                            break;
-                        case MapCodeConst.ROAD:
-                            g.drawImage(gamePlayManager.road, p.x, p.y, null);
-                            break;
-                        case MapCodeConst.SOURCE:
-                            g.drawImage(gamePlayManager.source, p.x - 72, p.y + 18, null);
-                            break;
+
+                    if (!gamePlayManager.boxOnMapList.isEmpty()) {
+                        for (Box b : gamePlayManager.boxOnMapList) {
+                            b.draw(g);
+                        }
                     }
                 }
+            }else {
+                g.drawString("Ban dep trai nhu Kenny Sang vay",600,250);
+                // hien cai gi thi hien o day
+                // can luu diem gi luu o day luon
             }
+        } else {
+            g.drawString("Choi ngu vl thua cmnr",600,250);
+            g.drawImage(gameoverImg,600,300,null);
         }
-        g.drawImage(backBtn, backRect.x, backRect.y, null);
 
-        if (!gamePlayManager.boxOnMapList.isEmpty()) {
-            for (Box b : gamePlayManager.boxOnMapList) {
-                b.draw(g);
-            }
-        }
+
 //        System.out.println(gamePlayManager.boxOnMapList.elementAt(0).getColor().toString());
 //        g.setColor(Color.BLACK);
+
+        g.drawImage(backBtn, backRect.x, backRect.y, null);
+        g.drawImage(pauseBtn, pauseRect.x, pauseRect.y, null);
+
         g.drawString("Score: " + gamePlayManager.score + "\t Time:" + timeLeft + "\t High Score: " + highScore, 40, 40);
 
     }
@@ -223,6 +262,11 @@ public class GamePlayScreen extends Screen {
             GameManager.getInstance().getStackScreen().pop();
             this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
         }
+
+        if (pauseRect.contains(e.getX(), e.getY())) {
+            switchPauseState();
+        }
+
     }
 
     @Override

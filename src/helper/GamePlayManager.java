@@ -29,11 +29,14 @@ public class GamePlayManager {
 
     public int map[][];
     private int maxNumberOfBoxesOnMap = 0; //tuy thuoc vao so End con can nhan box
-    private int numberOfBoxes;
+    public int numberOfBoxes;
+    public int completedBoxes = 0;
+
     public int time;
     private int level;
     int nextBoxTime = 2000;
     int countTime = 0;
+
 
     Random random = new Random();
 
@@ -274,6 +277,7 @@ public class GamePlayManager {
                         boxOnMapList.removeElementAt(i);
                         score += 10;
                         System.out.println("cong diem");
+                        completedBoxes++;
                         ColorBox nextColor = conveyorEnd.nextColorNeedToReceive();
                         if (nextColor != WHITE) {
                             boxWaitingList.push(new Box(startBoxLogicPoint, nextColor, level, getDirectionFromMapCode(mapCode)));
