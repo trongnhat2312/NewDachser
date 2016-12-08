@@ -90,7 +90,7 @@ public class GamePlayManager {
             plane = ImageIO.read(getClass().getResource("/resource/Create map button/Map_plane.png"));
             ship = ImageIO.read(getClass().getResource("/resource/Create map button/Map_ship.png"));
             tree = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree.png"));
-            tree1 = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree_1.png"));
+            tree1 = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree_2.png"));
             water = ImageIO.read(getClass().getResource("/resource/Create map button/Map_water.png"));
             road = ImageIO.read(getClass().getResource("/resource/Create map button/Map_road.png"));
             source = ImageIO.read(getClass().getResource("/resource/Create map button/Map_truck.png"));

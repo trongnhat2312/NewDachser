@@ -11,7 +11,6 @@ import helper.GamePlayManager;
 import helper.LogicPoint;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -63,7 +62,7 @@ public class GamePlayScreen extends Screen {
 
     private void loadImage() {
         try {
-            background = ImageIO.read(getClass().getResource("/resource/Image/play_background.png"));
+            background = ImageIO.read(getClass().getResource("/resource/image/play_background.png"));
             gameoverImg = ImageIO.read(getClass().getResource("/resource/menu button/gameover_icon.png"));
             backBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_back.png"));
             pauseBtn = ImageIO.read(getClass().getResource("/resource/menu button/pause.png"));

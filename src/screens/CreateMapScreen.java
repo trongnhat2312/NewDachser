@@ -23,7 +23,6 @@ import java.io.IOException;
  */
 public class CreateMapScreen extends Screen {
 
-    //    private Stack<Operation> stack = new Stack<Operation>();
     private int status = OperationConst.NONE;
     private LogicPoint startDrag = new LogicPoint();
     private LogicPoint finishDrag = new LogicPoint();
@@ -52,7 +51,7 @@ public class CreateMapScreen extends Screen {
     private void loadImageInMenu() {
 
         try {
-            background = ImageIO.read(getClass().getResource("/resource/Image/background_4.png"));
+            background = ImageIO.read(getClass().getResource("/resource/image/background_4.png"));
             sourceBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_source.png"));
             conveyorBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_conveyor.png"));
 
@@ -68,7 +67,7 @@ public class CreateMapScreen extends Screen {
             waterBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_water.png"));
             roadBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_road.png"));
             treeBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_tree.png"));
-            tree1Btn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_tree1.png"));
+            tree1Btn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_tree2.png"));
 
             backBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_back.png"));
 
@@ -210,7 +209,7 @@ public class CreateMapScreen extends Screen {
             imageInMap[MapCodeConst.TREE] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree.png"));
             imageInMap[MapCodeConst.WATER] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_water.png"));
             imageInMap[MapCodeConst.ROAD] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_road.png"));
-            imageInMap[MapCodeConst.TREE_1] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree_1.png"));
+            imageInMap[MapCodeConst.TREE_1] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree_2.png"));
 
             imageInMap[MapCodeConst.SOURCE] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_source.png"));
 
@@ -347,7 +346,6 @@ public class CreateMapScreen extends Screen {
                     LogicPoint lp = LogicPoint.convertPointToLogicPoint(e.getPoint());
                     Operation op = new Operation(status, lp, new LogicPoint());
                     createMapManager.execute(op);
-                    System.out.println("push operate :" + op.getCode() + "," + op.getP1().getLogicX() + "," + op.getP1().getLogicY());
                     break;
                 }
             }
@@ -380,7 +378,6 @@ public class CreateMapScreen extends Screen {
                         || (startDrag.getLogicY() == finishDrag.getLogicY())) {
                     Operation op = new Operation(OperationConst.DRAG_CONVEYOR, startDrag, finishDrag);
                     createMapManager.execute(op);
-                    System.out.println("vua push conveyor" + op.getCode() + "doan thang : " + op.getP1().getLogicX() + "," + op.getP1().getLogicY() + " ->" + op.getP2().getLogicX() + "," + op.getP2().getLogicY());
                 }
             }
         }
