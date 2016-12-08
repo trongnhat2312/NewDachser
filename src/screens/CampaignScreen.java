@@ -56,13 +56,13 @@ public class CampaignScreen extends Screen {
 
     private void loadImage() {
         try {
-            background = ImageIO.read(new File("resource/image/image 96.bmp"));
-            level_1_Image = ImageIO.read(new File("resource/play button/level_01.png"));
-            level_2_Image = ImageIO.read(new File("resource/play button/level_02.png"));
-            level_3_Image = ImageIO.read(new File("resource/play button/level_03.png"));
-            level_4_Image = ImageIO.read(new File("resource/play button/level_04.png"));
-            level_5_Image = ImageIO.read(new File("resource/play button/level_05.png"));
-            homeImage = ImageIO.read(new File("resource/instruction button/home button.png"));
+            background = ImageIO.read(getClass().getResource("/resource/image/image 96.bmp"));
+            level_1_Image = ImageIO.read(getClass().getResource("/resource/play button/level_01.png"));
+            level_2_Image = ImageIO.read(getClass().getResource("/resource/play button/level_02.png"));
+            level_3_Image = ImageIO.read(getClass().getResource("/resource/play button/level_03.png"));
+            level_4_Image = ImageIO.read(getClass().getResource("/resource/play button/level_04.png"));
+            level_5_Image = ImageIO.read(getClass().getResource("/resource/play button/level_05.png"));
+            homeImage = ImageIO.read(getClass().getResource("/resource/instruction button/home button.png"));
 
             level_1_Image = setSize(level_1_Image, buttonSize.width, buttonSize.height);
             level_2_Image = setSize(level_2_Image, buttonSize.width, buttonSize.height);
@@ -99,35 +99,35 @@ public class CampaignScreen extends Screen {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (level_1_Rect.contains(e.getX(), e.getY())) {
-            File mapFile = new File("resource/CampaignMap/map1.pam");
+            File mapFile = new File("./CampaignMap/map1.pam");
             GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_2_Rect.contains(e.getX(), e.getY())) {
-            File mapFile = new File("resource/CampaignMap/map2.pam");
+            File mapFile = new File("./CampaignMap/map2.pam");
             GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_3_Rect.contains(e.getX(), e.getY())) {
-            File mapFile = new File("resource/CampaignMap/map3.pam");
+            File mapFile = new File("./CampaignMap/map3.pam");
             GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_4_Rect.contains(e.getX(), e.getY())) {
-            File mapFile = new File("resource/CampaignMap/map4.pam");
+            File mapFile = new File("./CampaignMap/map4.pam");
             GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);
             GameManager.getInstance().getStackScreen().push(gamePlayScreen);
         }
         if (level_5_Rect.contains(e.getX(), e.getY())) {
-            File mapFile = new File("resource/CampaignMap/map5.pam");
+            File mapFile = new File("./CampaignMap/map5.pam");
             GamePlayScreen gamePlayScreen = new GamePlayScreen(gameWindow, mapFile);
             gameWindow.removeMouseListener(this);
             gameWindow.addMouseListener(gamePlayScreen);

@@ -25,12 +25,12 @@ public class ConveyorYEnd extends ConveyorEnd{
         super.loadImage();
         sprites = new ArrayList<>();
         try {
-            sprites.add(ImageIO.read(new File("resource/conveyor/y_end/blue_y_end.png")));
-            sprites.add(ImageIO.read(new File("resource/conveyor/y_end/green_y_end.png")));
-            sprites.add(ImageIO.read(new File("resource/conveyor/y_end/red_y_end.png")));
-            sprites.add(ImageIO.read(new File("resource/conveyor/y_end/yellow_y_end.png")));
-            sprites.add(ImageIO.read(new File("resource/conveyor/y_end/pink_y_end.png")));
-            sprites.add(ImageIO.read(new File("resource/conveyor/y_end/white_y_end.png")));
+            sprites.add(ImageIO.read(getClass().getResource("/resource/conveyor/y_end/blue_y_end.png")));
+            sprites.add(ImageIO.read(getClass().getResource("/resource/conveyor/y_end/green_y_end.png")));
+            sprites.add(ImageIO.read(getClass().getResource("/resource/conveyor/y_end/red_y_end.png")));
+            sprites.add(ImageIO.read(getClass().getResource("/resource/conveyor/y_end/yellow_y_end.png")));
+            sprites.add(ImageIO.read(getClass().getResource("/resource/conveyor/y_end/pink_y_end.png")));
+            sprites.add(ImageIO.read(getClass().getResource("/resource/conveyor/y_end/white_y_end.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

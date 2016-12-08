@@ -39,7 +39,7 @@ public class CreateMapScreen extends Screen {
 //    private Cursor cursor = Cursor.getDefaultCursor();
 
     private CreateMapManager createMapManager = new CreateMapManager();
-    private final Point pointO = new Point(10, 30);
+    private final Point pointO = new Point(8, 31);
     private final Dimension buttonSize = new Dimension(50, 50);
 
     public CreateMapScreen(GameWindow gameWindow) {
@@ -52,25 +52,25 @@ public class CreateMapScreen extends Screen {
     private void loadImageInMenu() {
 
         try {
-            background = ImageIO.read(new File("resource/Image/background_4.png"));
-            sourceBtn = ImageIO.read(new File("resource/Create map button/Button_source.png"));
-            conveyorBtn = ImageIO.read(new File("resource/Create map button/Button_conveyor.png"));
+            background = ImageIO.read(getClass().getResource("/resource/Image/background_4.png"));
+            sourceBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_source.png"));
+            conveyorBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_conveyor.png"));
 
-            deleteBtn = ImageIO.read(new File("resource/Create map button/Button_delete.png"));
-            eraseBtn = ImageIO.read(new File("resource/Create map button/Button_eraser.png"));
-            saveBtn = ImageIO.read(new File("resource/Create map button/Button_save.png"));
-            undoBtn = ImageIO.read(new File("resource/Create map button/Button_undo.png"));
+            deleteBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_delete.png"));
+            eraseBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_eraser.png"));
+            saveBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_save.png"));
+            undoBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_undo.png"));
 
-            planeBtn = ImageIO.read(new File("resource/Create map button/Button_plane.png"));
-            shipBtn = ImageIO.read(new File("resource/Create map button/Button_ship.png"));
-            truckBtn = ImageIO.read(new File("resource/Create map button/Button_truck.png"));
+            planeBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_plane.png"));
+            shipBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_ship.png"));
+            truckBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_truck.png"));
 
-            waterBtn = ImageIO.read(new File("resource/Create map button/Button_water.png"));
-            roadBtn = ImageIO.read(new File("resource/Create map button/Button_road.png"));
-            treeBtn = ImageIO.read(new File("resource/Create map button/Button_tree.png"));
-            tree1Btn = ImageIO.read(new File("resource/Create map button/Button_tree1.png"));
+            waterBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_water.png"));
+            roadBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_road.png"));
+            treeBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_tree.png"));
+            tree1Btn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_tree1.png"));
 
-            backBtn = ImageIO.read(new File("resource/Create map button/Button_back.png"));
+            backBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_back.png"));
 
 
 //            background = setSize(background, this.gameWindow.windowSize);
@@ -181,38 +181,38 @@ public class CreateMapScreen extends Screen {
         try {
             imageInMap[MapCodeConst.NONSWITCH_DOWN]
                     = imageInMap[MapCodeConst.CONVEYOR_DOWN]
-                    = ImageIO.read(new File("resource/Create map button/Map_nonswitch_down.png"));
+                    = ImageIO.read(getClass().getResource("/resource/Create map button/Map_nonswitch_down.png"));
             imageInMap[MapCodeConst.NONSWITCH_LEFT]
                     = imageInMap[MapCodeConst.CONVEYOR_LEFT]
-                    = ImageIO.read(new File("resource/Create map button/Map_nonswitch_left.png"));
+                    = ImageIO.read(getClass().getResource("/resource/Create map button/Map_nonswitch_left.png"));
             imageInMap[MapCodeConst.NONSWITCH_RIGHT]
                     = imageInMap[MapCodeConst.CONVEYOR_RIGHT]
-                    = ImageIO.read(new File("resource/Create map button/Map_nonswitch_right.png"));
+                    = ImageIO.read(getClass().getResource("/resource/Create map button/Map_nonswitch_right.png"));
             imageInMap[MapCodeConst.NONSWITCH_UP]
                     = imageInMap[MapCodeConst.CONVEYOR_UP]
-                    = ImageIO.read(new File("resource/Create map button/Map_nonswitch_up.png"));
+                    = ImageIO.read(getClass().getResource("/resource/Create map button/Map_nonswitch_up.png"));
 
             imageInMap[MapCodeConst.END_DOWN]
                     = imageInMap[MapCodeConst.END_LEFT]
                     = imageInMap[MapCodeConst.END_RIGHT]
                     = imageInMap[MapCodeConst.END_UP]
-                    = ImageIO.read(new File("resource/Create map button/Map_end.png"));
+                    = ImageIO.read(getClass().getResource("/resource/Create map button/Map_end.png"));
 
-            imageInMap[MapCodeConst.SWITCH_DOWN] = ImageIO.read(new File("resource/Create map button/Map_switch_down.png"));
-            imageInMap[MapCodeConst.SWITCH_LEFT] = ImageIO.read(new File("resource/Create map button/Map_switch_left.png"));
-            imageInMap[MapCodeConst.SWITCH_RIGHT] = ImageIO.read(new File("resource/Create map button/Map_switch_right.png"));
-            imageInMap[MapCodeConst.SWITCH_UP] = ImageIO.read(new File("resource/Create map button/Map_switch_up.png"));
+            imageInMap[MapCodeConst.SWITCH_DOWN] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_switch_down.png"));
+            imageInMap[MapCodeConst.SWITCH_LEFT] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_switch_left.png"));
+            imageInMap[MapCodeConst.SWITCH_RIGHT] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_switch_right.png"));
+            imageInMap[MapCodeConst.SWITCH_UP] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_switch_up.png"));
 
-            imageInMap[MapCodeConst.TRUCK] = ImageIO.read(new File("resource/Create map button/Map_truck.png"));
-            imageInMap[MapCodeConst.PLANE] = ImageIO.read(new File("resource/Create map button/Map_plane.png"));
-            imageInMap[MapCodeConst.SHIP] = ImageIO.read(new File("resource/Create map button/Map_ship.png"));
+            imageInMap[MapCodeConst.TRUCK] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_truck.png"));
+            imageInMap[MapCodeConst.PLANE] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_plane.png"));
+            imageInMap[MapCodeConst.SHIP] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_ship.png"));
 
-            imageInMap[MapCodeConst.TREE] = ImageIO.read(new File("resource/Create map button/Map_tree.png"));
-            imageInMap[MapCodeConst.WATER] = ImageIO.read(new File("resource/Create map button/Map_water.png"));
-            imageInMap[MapCodeConst.ROAD] = ImageIO.read(new File("resource/Create map button/Map_road.png"));
-            imageInMap[MapCodeConst.TREE_1] = ImageIO.read(new File("resource/Create map button/Map_tree_1.png"));
+            imageInMap[MapCodeConst.TREE] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree.png"));
+            imageInMap[MapCodeConst.WATER] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_water.png"));
+            imageInMap[MapCodeConst.ROAD] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_road.png"));
+            imageInMap[MapCodeConst.TREE_1] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree_1.png"));
 
-            imageInMap[MapCodeConst.SOURCE] = ImageIO.read(new File("resource/Create map button/Map_source.png"));
+            imageInMap[MapCodeConst.SOURCE] = ImageIO.read(getClass().getResource("/resource/Create map button/Map_source.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -274,7 +274,7 @@ public class CreateMapScreen extends Screen {
                 return;
             }
 
-            JFileChooser saveMap = new JFileChooser("resource/Map");
+            JFileChooser saveMap = new JFileChooser("./Map");
             saveMap.setFileFilter(new FileFilter() {
                 @Override
                 public boolean accept(File f) {

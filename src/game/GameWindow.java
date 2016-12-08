@@ -18,29 +18,17 @@ import java.io.IOException;
 
 public class GameWindow extends Frame implements Runnable{
     BufferedImage bufferImage;
-    BufferedImage background;
-    BufferedImage mouseIcon;
-    //    Screen gamePlayingScreen = new GamePlayScreen();
+
     public final Dimension windowSize = new Dimension(1280,720);
 
     public GameWindow() throws IOException {
         initWindow();
-        loadImage();
-
         MenuScreen menuScreen = new MenuScreen(this);
         this.addMouseListener(menuScreen);
         GameManager.getInstance().getStackScreen().push(menuScreen);
 
     }
 
-
-    void loadImage() {
-        try {
-            background = ImageIO.read(new File("resource/Image/background_4.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     void initWindow(){
         this.setTitle("Dachser");

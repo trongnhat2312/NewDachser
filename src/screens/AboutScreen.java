@@ -28,8 +28,8 @@ public class AboutScreen extends Screen {
     private void loadImage() {
 
         try {
-            background = ImageIO.read(new File("resource/instruction button/about background.jpg"));
-            homeButton = ImageIO.read(new File("resource/instruction button/home button.png"));
+            background = ImageIO.read(getClass().getResource("/resource/instruction button/about_screen.png"));
+            homeButton = ImageIO.read(getClass().getResource("/resource/instruction button/home button.png"));
 
             background = setSize(background, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
             homeButton = setSize(homeButton, 100, 100);

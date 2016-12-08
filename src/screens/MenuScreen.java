@@ -31,12 +31,12 @@ public class MenuScreen extends Screen {
 
     private void loadImage() {
         try {
-            playImage = ImageIO.read(new File("resource/menu button/play button.png"));
-            createmapImage = ImageIO.read(new File("resource/menu button/create map button.png"));
-            instructionImage = ImageIO.read(new File("resource/menu button/instruction button.png"));
-            aboutImage = ImageIO.read(new File("resource/menu button/about button.png"));
-            exitImage = ImageIO.read(new File("resource/menu button/exit button.png"));
-            background = ImageIO.read(new File("resource/image/image 96.bmp"));
+            playImage = ImageIO.read(getClass().getResource("/resource/menu button/play button.png"));
+            createmapImage = ImageIO.read(getClass().getResource("/resource/menu button/create map button.png"));
+            instructionImage = ImageIO.read(getClass().getResource("/resource/menu button/instruction button.png"));
+            aboutImage = ImageIO.read(getClass().getResource("/resource/menu button/about button.png"));
+            exitImage = ImageIO.read(getClass().getResource("/resource/menu button/exit button.png"));
+            background = ImageIO.read(getClass().getResource("/resource/image/image 96.bmp"));
 
 
             playImage = setSize(playImage, buttonSize.width, buttonSize.height);
@@ -58,7 +58,6 @@ public class MenuScreen extends Screen {
         instructionRect = new Rectangle(firstButtonLocation.x, firstButtonLocation.y + 2 * buttonSize.height, playImage.getWidth(), playImage.getHeight());
         aboutRect = new Rectangle(firstButtonLocation.x, firstButtonLocation.y + 3 * buttonSize.height, playImage.getWidth(), playImage.getHeight());
         exitRect = new Rectangle(firstButtonLocation.x, firstButtonLocation.y + 4 * buttonSize.height, playImage.getWidth(), playImage.getHeight());
-
     }
 
     @Override
@@ -135,4 +134,5 @@ public class MenuScreen extends Screen {
     public void mouseExited(MouseEvent e) {
 
     }
+
 }

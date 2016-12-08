@@ -19,7 +19,7 @@ public class AnimationHelper {
         this.time = time;
         try {
             for (int i = 1; i < imageNumber+1; i++){
-                frames.add(ImageIO.read(new File(imagestring+i+").png")));
+                frames.add(ImageIO.read(getClass().getResource(imagestring+i+").png")));
             }
         } catch (IOException e) {
             e.printStackTrace();

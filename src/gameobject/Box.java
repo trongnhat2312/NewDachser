@@ -41,7 +41,7 @@ public class Box extends GameObject {
         this.direction = d;
         loadImage();
 //        try {
-//            this.sprite = ImageIO.read(new File("resource/play button/pink_box.png"));
+//            this.sprite = ImageIO.read(getClass().getResource("/resource/play button/pink_box.png"));
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
@@ -56,7 +56,7 @@ public class Box extends GameObject {
         this.direction = d;
         loadImage();
 //        try {
-//            this.sprite = ImageIO.read(new File("resource/play button/pink_box.png"));
+//            this.sprite = ImageIO.read(getClass().getResource("/resource/play button/pink_box.png"));
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
@@ -198,22 +198,22 @@ public class Box extends GameObject {
         try {
             switch (c) {
                 case RED:
-                    this.sprite = ImageIO.read(new File("resource/play button/red_box.png"));
+                    this.sprite = ImageIO.read(getClass().getResource("/resource/play button/red_box.png"));
                     break;
                 case YELLOW:
-                    this.sprite = ImageIO.read(new File("resource/play button/yellow_box.png"));
+                    this.sprite = ImageIO.read(getClass().getResource("/resource/play button/yellow_box.png"));
                     break;
                 case PINK:
-                    this.sprite = ImageIO.read(new File("resource/play button/pink_box.png"));
+                    this.sprite = ImageIO.read(getClass().getResource("/resource/play button/pink_box.png"));
                     break;
                 case BLUE:
-                    this.sprite = ImageIO.read(new File("resource/play button/blue_box.png"));
+                    this.sprite = ImageIO.read(getClass().getResource("/resource/play button/blue_box.png"));
                     break;
                 case GREEN:
-                    this.sprite = ImageIO.read(new File("resource/play button/green_box.png"));
+                    this.sprite = ImageIO.read(getClass().getResource("/resource/play button/green_box.png"));
                     break;
                 case WHITE:
-                    this.sprite = ImageIO.read(new File("resource/play button/null_box.png"));
+                    this.sprite = ImageIO.read(getClass().getResource("/resource/play button/null_box.png"));
                     break;
                 default:
                     break;

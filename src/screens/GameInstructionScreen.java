@@ -3,7 +3,6 @@ package screens;
 import game.GameWindow;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -15,55 +14,53 @@ import java.io.IOException;
  */
 public class GameInstructionScreen extends Screen{
     private GameWindow gameWindow;
-    private BufferedImage background;
-    private BufferedImage backButton, nextButton, homeButton;
-    private BufferedImage guideBox;
-    private BufferedImage[] instruction = new BufferedImage[10];
+    private BufferedImage instructionScreen;
+    private BufferedImage previousButton, nextButton, homeButton;
+    private Rectangle nextRect, previousRect, homeRect;
+    private BufferedImage[] instruction = new BufferedImage[11];
     private int currentImageNumber = 1;
-    private int maxImageNumber = 3;
+    private int maxImageNumber = instruction.length;
     private int minImageNumber = 1;
 
-    Rectangle nextRect, previousRect, homeRect;
-    private final Dimension guideSize = new Dimension(500,500); // size cua man hinh huong dan
-    private final Rectangle box;   // vi tri cua man hinh con huong dan
     public GameInstructionScreen(GameWindow gameWindow){
-        JPanel jpanel = new JPanel();
-        jpanel.setPreferredSize(new Dimension(200, 50));
-        jpanel.setBackground(Color.blue);
-        this.add(jpanel, BorderLayout.NORTH);
+
         this.gameWindow = gameWindow;
-        box = new Rectangle(this.gameWindow.windowSize.width / 2 - guideSize.width / 2 ,
-                this.gameWindow.windowSize.height / 2 - guideSize.height / 2, guideSize.width,guideSize.height);
         this.loadImage();
         this.makeRect();
+        instructionScreen = instruction[currentImageNumber - 1];
     }
 
     private void loadImage(){
 
         try {
-            background = ImageIO.read(new File("resource/instruction button/instruction background.png"));
-            nextButton = ImageIO.read(new File("resource/instruction button/next button.png"));
-            backButton = ImageIO.read(new File("resource/instruction button/back button.png"));
-            homeButton = ImageIO.read(new File("resource/instruction button/home button.png"));
+            nextButton = ImageIO.read(getClass().getResource("/resource/instruction button/next button.png"));
+            previousButton = ImageIO.read(getClass().getResource("/resource/instruction button/back button.png"));
+            homeButton = ImageIO.read(getClass().getResource("/resource/instruction button/home button.png"));
 
-            instruction[1] = ImageIO.read(new File("resource/instruction button/instruction1.png"));
-            instruction[2] = ImageIO.read(new File("resource/instruction button/instruction2.png"));
-            instruction[3] = ImageIO.read(new File("resource/instruction button/instruction3.png"));
-
-            background = setSize(background, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
-            backButton = setSize(backButton,50, 50);
-            nextButton = setSize(nextButton, 50, 50);
+            for (int i = 0; i < instruction.length; i++) {
+                instruction[i] = ImageIO.read(getClass().getResource("/resource/instruction button/instrution_" + (i + 1) +".png"));
+                instruction[i] = setSize(instruction[i], this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
+            }
+            previousButton = setSize(previousButton,70, 70);
+            nextButton = setSize(nextButton, 70, 70);
             homeButton = setSize(homeButton, 100, 100);
-            guideBox = setSize(instruction[1],box.width,box.height);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void makeRect(){
-        previousRect = new Rectangle(box.x ,box.y + guideBox.getHeight(), backButton.getWidth(), backButton.getHeight());
-        nextRect = new Rectangle(box.x + guideBox.getWidth() - nextButton.getWidth(), box.y + guideBox.getHeight(),nextButton.getWidth(),nextButton.getHeight());
-        homeRect = new Rectangle(this.gameWindow.getWidth()/2 - homeButton.getWidth()/2, this.gameWindow.getHeight() - homeButton.getHeight(), homeButton.getWidth(), homeButton.getHeight());
+        previousRect = new Rectangle(8 ,
+                this.gameWindow.getHeight()/2 - previousButton.getHeight()/2,
+                previousButton.getWidth(), previousButton.getHeight());
+
+        nextRect = new Rectangle(this.gameWindow.getWidth() - nextButton.getWidth() - 8,
+                this.gameWindow.getHeight()/2 - nextButton.getHeight()/2,
+                nextButton.getWidth(),nextButton.getHeight());
+
+        homeRect = new Rectangle(this.gameWindow.getWidth()/2 - homeButton.getWidth()/2,
+                this.gameWindow.getHeight() - homeButton.getHeight(),
+                homeButton.getWidth(), homeButton.getHeight());
     }
 
     @Override
@@ -73,10 +70,13 @@ public class GameInstructionScreen extends Screen{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(background, 0, 0, null);
-        g.drawImage(guideBox, box.x , box.y, null);
-        g.drawImage(backButton, previousRect.x, previousRect.y, null);
-        g.drawImage(nextButton, nextRect.x, nextRect.y, null);
+        g.drawImage(instructionScreen, 0, 0, null);
+        if(currentImageNumber > minImageNumber) {
+            g.drawImage(previousButton, previousRect.x, previousRect.y, null);
+        }
+        if (currentImageNumber < maxImageNumber) {
+            g.drawImage(nextButton, nextRect.x, nextRect.y, null);
+        }
         g.drawImage(homeButton, homeRect.x, homeRect.y, null);
     }
 
@@ -85,13 +85,13 @@ public class GameInstructionScreen extends Screen{
         if (nextRect.contains(e.getX(),e.getY())){
             if (currentImageNumber < maxImageNumber) {
                 currentImageNumber += 1;
-                guideBox = setSize(instruction[currentImageNumber],box.width, box.height);
+                instructionScreen = instruction[currentImageNumber - 1];
             }
         }
         if (previousRect.contains(e.getX(),e.getY())){
             if (currentImageNumber > minImageNumber) {
                 currentImageNumber -= 1;
-                guideBox = setSize(instruction[currentImageNumber],box.width, box.height);
+                instructionScreen = instruction[currentImageNumber - 1];
             }
         }
 

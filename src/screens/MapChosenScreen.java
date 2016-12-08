@@ -45,10 +45,10 @@ public class MapChosenScreen extends Screen {
 
     private void loadImage() {
         try {
-            background = ImageIO.read(new File("resource/image/image 96.bmp"));
-            campaignImage = ImageIO.read(new File("resource/menu button/campaign_button.png"));
-            customMapImage = ImageIO.read(new File("resource/menu button/custom map_button.png"));
-            homeImage = ImageIO.read(new File("resource/instruction button/home button.png"));
+            background = ImageIO.read(getClass().getResource("/resource/image/image 96.bmp"));
+            campaignImage = ImageIO.read(getClass().getResource("/resource/menu button/campaign_button.png"));
+            customMapImage = ImageIO.read(getClass().getResource("/resource/menu button/custom map_button.png"));
+            homeImage = ImageIO.read(getClass().getResource("/resource/instruction button/home button.png"));
 
             campaignImage = setSize(campaignImage, buttonSize.width, buttonSize.height);
             customMapImage = setSize(customMapImage, buttonSize.width, buttonSize.height);
@@ -86,7 +86,7 @@ public class MapChosenScreen extends Screen {
             GameManager.getInstance().getStackScreen().push(campaignScreen);
         }
         if (customMapRect.contains(e.getX(), e.getY())) {
-            JFileChooser chooserMap = new JFileChooser("resource/Map");
+            JFileChooser chooserMap = new JFileChooser("./Map");
             int rVal = chooserMap.showOpenDialog(this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
                 File mapFile = chooserMap.getSelectedFile();

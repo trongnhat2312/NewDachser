@@ -5,13 +5,15 @@ package helper;
  */
 
 
-
 import gameobject.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 import static createmap.MapCodeConst.*;
@@ -23,8 +25,8 @@ import static gameobject.ColorBox.*;
  */
 public class GamePlayManager {
     public Conveyor[][] conveyor = new Conveyor[36][36];
-    public Vector<ConveyorSwitch> conveyorSwitchList = new Vector<ConveyorSwitch>();
-    public Vector<ConveyorEnd> validConveyorEndList = new Vector<ConveyorEnd>();
+    public Vector<ConveyorSwitch> conveyorSwitchList = new Vector<>();
+    public Vector<ConveyorEnd> validConveyorEndList = new Vector<>();
     public BufferedImage truck, plane, ship, tree, tree1, water, road, source;
 
     public int map[][];
@@ -40,8 +42,8 @@ public class GamePlayManager {
 
     Random random = new Random();
 
-    public Stack<Box> boxWaitingList = new Stack<Box>();
-    public Vector<Box> boxOnMapList = new Vector<Box>();
+    public Stack<Box> boxWaitingList = new Stack<>();
+    public Vector<Box> boxOnMapList = new Vector<>();
     //
     public int score = 0;
     LogicPoint startBoxLogicPoint;
@@ -84,14 +86,14 @@ public class GamePlayManager {
 
     public void getImagesForMap() {
         try {
-            truck = ImageIO.read(new File("resource/Create map button/Map_truck.png"));
-            plane = ImageIO.read(new File("resource/Create map button/Map_plane.png"));
-            ship = ImageIO.read(new File("resource/Create map button/Map_ship.png"));
-            tree = ImageIO.read(new File("resource/Create map button/Map_tree.png"));
-            tree1 = ImageIO.read(new File("resource/Create map button/Map_tree_1.png"));
-            water = ImageIO.read(new File("resource/Create map button/Map_water.png"));
-            road = ImageIO.read(new File("resource/Create map button/Map_road.png"));
-            source = ImageIO.read(new File("resource/Create map button/Map_truck.png"));
+            truck = ImageIO.read(getClass().getResource("/resource/Create map button/Map_truck.png"));
+            plane = ImageIO.read(getClass().getResource("/resource/Create map button/Map_plane.png"));
+            ship = ImageIO.read(getClass().getResource("/resource/Create map button/Map_ship.png"));
+            tree = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree.png"));
+            tree1 = ImageIO.read(getClass().getResource("/resource/Create map button/Map_tree_1.png"));
+            water = ImageIO.read(getClass().getResource("/resource/Create map button/Map_water.png"));
+            road = ImageIO.read(getClass().getResource("/resource/Create map button/Map_road.png"));
+            source = ImageIO.read(getClass().getResource("/resource/Create map button/Map_truck.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -223,29 +225,11 @@ public class GamePlayManager {
                 return false;
         }
     }
-//    public void getImagesForMap() {
-//        try {
-//            truck = ImageIO.read(new File("resource/Create map button/Map_truck.png"));
-//            plane = ImageIO.read(new File("resource/Create map button/Map_plane.png"));
-//            ship = ImageIO.read(new File("resource/Create map button/Map_ship.png"));
-//            tree = ImageIO.read(new File("resource/Create map button/Map_tree.png"));
-//            tree1 = ImageIO.read(new File("resource/Create map button/Map_tree_1.png"));
-//            water = ImageIO.read(new File("resource/Create map button/Map_water.png"));
-//            road = ImageIO.read(new File("resource/Create map button/Map_road.png"));
-//            source = ImageIO.read(new File("resource/Create map button/Map_truck.png"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
     public void makeBox() {
         countTime += 17;
 
-//        int makeBoxTime = rand.nextInt()*2000 + 3000;
-//        while (countTime <= makeBoxTime){
-
-//        }
 
         if (!boxWaitingList.isEmpty() && boxOnMapList.size() < maxNumberOfBoxesOnMap && countTime > nextBoxTime) {
             boxOnMapList.add(boxWaitingList.pop());
@@ -292,29 +276,8 @@ public class GamePlayManager {
                         boxOnMapList.removeElementAt(i);
 
                     }
-
-//                    for (ConveyorEnd conveyorEnd : validConveyorEndList) {
-//                        LogicPoint conveyorPosition = conveyorEnd.getLogicPoint();
-//                        if ((conveyorPosition.getLogicX() == position.getLogicX())
-//                                && (conveyorPosition.getLogicY() == position.getLogicY())) {
-//                            if(box.getColor() == conveyorEnd.getColor()) {
-//                                boxOnMapList.removeElementAt(i);
-//                                score += 100;
-//                                ColorBox nextColor = conveyorEnd.nextColorNeedToReceive();
-//                                if (nextColor != WHITE) {
-//                                    boxWaitingList.push(new Box(startBoxLogicPoint, nextColor, level));
-//                                }
-//                            }else {
-//                                boxOnMapList.removeElementAt(i);
-//                            }
-//                        }
             }
         }
-//            if (box.isAllowedToCheck) {
-//                box.setDirection(getDirectionFromMapCode(map[box.getLogicPoint().getLogicX()][box.getLogicPoint().getLogicY()]));
-//            }
-//            box.checkToChangDirection();
-//        }
     }
 
 
@@ -367,7 +330,7 @@ public class GamePlayManager {
             case CONVEYOR_RIGHT:
             case CONVEYOR_LEFT:
             case CONVEYOR_DOWN:
-                return new ConveyorMoving(posX, posY).getConveyorByType(getConveyorTypeFromMapcode(mapCode));
+                return new ConveyorMoving(posX, posY).getConveyorByType(getConveyorTypeFromMapcode(mapCode),level);
             case NONSWITCH_DOWN:
             case NONSWITCH_LEFT:
             case NONSWITCH_RIGHT:

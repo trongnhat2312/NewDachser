@@ -11,19 +11,22 @@ import helper.GamePlayManager;
 import helper.LogicPoint;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static javax.swing.JOptionPane.*;
+
 /**
  * Created by Hoangelato on 17/11/2016.
  */
 public class GamePlayScreen extends Screen {
     private GameWindow gameWindow;
-    private BufferedImage background, backBtn, pauseBtn, gameoverImg;
-    private Rectangle backRect, backgroundRect, pauseRect;
+    private BufferedImage background, backBtn, pauseBtn, gameoverImg, stImage, winImage, loseImage;
+    private Rectangle backRect, backgroundRect, pauseRect, stRect;
 
     private GamePlayManager gamePlayManager;
 
@@ -36,7 +39,7 @@ public class GamePlayScreen extends Screen {
     private static final int fps = 60;
     private int thisFPS = 0;
     private final Dimension buttonSize = new Dimension(50, 50);
-    private final Point pointO = new Point(10, 30);
+    private final Point pointO = new Point(8, 31);
 
     public GamePlayScreen(GameWindow gameWindow, File mapFile) {
         this.gameWindow = gameWindow;
@@ -48,57 +51,45 @@ public class GamePlayScreen extends Screen {
     }
 
     private void makeRect() {
-        backgroundRect = new Rectangle(8, 31, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
+        backgroundRect = new Rectangle(8, pointO.y, this.gameWindow.windowSize.width, this.gameWindow.windowSize.height);
+        stRect = new Rectangle(8, pointO.y, stImage.getWidth(), stImage.getHeight());
         backRect = new Rectangle(1220, pointO.y, this.buttonSize.width, this.buttonSize.height);
-        pauseRect = new Rectangle(1000, pointO.y,this.buttonSize.width, this.buttonSize.height);
+        pauseRect = new Rectangle(this.gameWindow.windowSize.width / 2 - pauseBtn.getWidth() / 2, pointO.y,
+                pauseBtn.getWidth(), pauseBtn.getHeight());
+
 
     }
 
-//    void loadHighScore() {
-//        BufferedReader br = null;
-//        try {
-//            br = new BufferedReader(new FileReader("resource/highscore.hs"));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        String line = null;
-//        try {
-//            if (br != null) {
-//                line = br.readLine();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        if (line != null)
-//            highScore = Integer.parseInt(line);
-//
-//
-//    }
 
     private void loadImage() {
         try {
-            background = ImageIO.read(new File("resource/Image/play_background.png"));
-            gameoverImg = ImageIO.read(new File("resource/menu button/gameover_icon.png"));
-            backBtn = ImageIO.read(new File("resource/Create map button/Button_back.png"));
-            pauseBtn = ImageIO.read(new File("resource/menu button/pause.png"));
+            background = ImageIO.read(getClass().getResource("/resource/Image/play_background.png"));
+            gameoverImg = ImageIO.read(getClass().getResource("/resource/menu button/gameover_icon.png"));
+            backBtn = ImageIO.read(getClass().getResource("/resource/Create map button/Button_back.png"));
+            pauseBtn = ImageIO.read(getClass().getResource("/resource/menu button/pause.png"));
+            stImage = ImageIO.read(getClass().getResource("/resource/play button/st_board.png"));
+            winImage = ImageIO.read(getClass().getResource("/resource/play button/win.png"));
+            loseImage = ImageIO.read(getClass().getResource("/resource/play button/lose.png"));
 
 
-            pauseBtn = setSize(pauseBtn,this.buttonSize);
+            pauseBtn = setSize(pauseBtn, new Dimension(120, 50));
             backBtn = setSize(backBtn, this.buttonSize);
+            stImage = setSize(stImage, new Dimension(360, 30));
+            loseImage = setSize(loseImage,new Dimension(250, 250));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void switchPauseState(){
+    private void switchPauseState() {
         if (isPaused) isPaused = false;
         else isPaused = true;
     }
 
     @Override
     public void update() {
-        if (!isPaused&&!isWon) {
+        if (!isPaused && !isWon) {
             for (Conveyor[] conveyorArray : gamePlayManager.conveyor) {
                 for (Conveyor conveyor : conveyorArray) {
                     conveyor.update();
@@ -107,17 +98,9 @@ public class GamePlayScreen extends Screen {
             thisFPS += 1;
             if (thisFPS >= fps) {
                 thisFPS = 0;
-                if (timeLeft>0) timeLeft--;
+                if (timeLeft > 0) timeLeft--;
 
             }
-
-
-//        for (ConveyorSwitch conveyorSwitch : gamePlayManager.conveyorSwitchList) {
-//            conveyorSwitch.update();
-//        }
-
-//        System.out.println(gamePlayManager.box1.getDirection());
-//        gamePlayManager.box1.movebyDirection();
             gamePlayManager.makeBox();
             if (!gamePlayManager.boxOnMapList.isEmpty()) {
                 for (Box b : gamePlayManager.boxOnMapList) {
@@ -127,8 +110,7 @@ public class GamePlayScreen extends Screen {
                 gamePlayManager.checkBoxToEnd();
             }
 
-
-            if (gamePlayManager.completedBoxes ==gamePlayManager.numberOfBoxes)
+            if (gamePlayManager.completedBoxes == gamePlayManager.numberOfBoxes)
                 isWon = true;
         }
 
@@ -153,8 +135,8 @@ public class GamePlayScreen extends Screen {
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, backgroundRect.x, backgroundRect.y, null);
-        if (timeLeft!=0) {
-            if(!isWon) {
+        if (timeLeft != 0) {
+            if (!isWon) {
                 if (!isPaused) {
                     for (int sum = 15; sum < 60; sum++) {
                         for (int i = 0; i <= sum; i++) {
@@ -200,41 +182,34 @@ public class GamePlayScreen extends Screen {
                             b.draw(g);
                         }
                     }
+
+                    g.drawImage(pauseBtn, pauseRect.x, pauseRect.y, null);
                 }
-            }else {
-                g.drawString("Ban dep trai nhu Kenny Sang vay",600,250);
-                // hien cai gi thi hien o day
-                // can luu diem gi luu o day luon
+            } else {
+                g.drawImage(winImage, this.gameWindow.getWidth() / 2 - winImage.getWidth() / 2,
+                        this.gameWindow.getHeight() / 2 - winImage.getHeight() / 2, null);
             }
         } else {
-            g.drawString("Choi ngu vl thua cmnr",600,250);
-            g.drawImage(gameoverImg,600,300,null);
+            g.drawImage(loseImage, this.gameWindow.getWidth() / 2 - loseImage.getWidth() / 2, 150, null);
+            g.drawImage(gameoverImg, this.gameWindow.getWidth() / 2 - gameoverImg.getWidth() / 2, 300, null);
         }
 
-
-//        System.out.println(gamePlayManager.boxOnMapList.elementAt(0).getColor().toString());
-//        g.setColor(Color.BLACK);
-
         g.drawImage(backBtn, backRect.x, backRect.y, null);
-        g.drawImage(pauseBtn, pauseRect.x, pauseRect.y, null);
+        g.drawImage(stImage, stRect.x, stRect.y, null);
 
-        g.drawString("Score: " + gamePlayManager.score + "\t Time:" + timeLeft + "\t High Score: " + highScore, 40, 40);
+        g.setColor(Color.YELLOW);
+        g.drawString("" + gamePlayManager.score, 200, 48);
+
+        g.drawString("" + timeLeft, 310, 48);
 
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         Point pointClicked = new Point(e.getX(), e.getY());
-//
-//        System.out.println("p =" + e.getX() + "," + e.getY());
-//        LogicPoint f = LogicPoint.convertPointToLogicPoint(e.getPoint());
-//        System.out.println("logic p =" + f.getLogicX() + "," + f.getLogicY());
-//
-
 
         for (ConveyorSwitch conveyorSwitch : gamePlayManager.conveyorSwitchList) {
             if (conveyorSwitch.clickArea.contains(pointClicked)) {
-//                gamePlayManager.getProbableDirectionForAllSwitches();
                 conveyorSwitch.changeDirection();
                 int x = conveyorSwitch.getLogicPoint().getLogicX();
                 int y = conveyorSwitch.getLogicPoint().getLogicY();
@@ -265,6 +240,14 @@ public class GamePlayScreen extends Screen {
 
         if (pauseRect.contains(e.getX(), e.getY())) {
             switchPauseState();
+            int chosen = showConfirmDialog(this, "Continue?", "Pause", OK_CANCEL_OPTION, QUESTION_MESSAGE);
+            if (chosen == OK_OPTION) {
+                switchPauseState();
+            } else {
+                this.gameWindow.removeMouseListener(this);
+                GameManager.getInstance().getStackScreen().pop();
+                this.gameWindow.addMouseListener(GameManager.getInstance().getStackScreen().peek());
+            }
         }
 
     }

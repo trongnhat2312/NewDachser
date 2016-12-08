@@ -51,10 +51,10 @@ public class ConveyorSwitch extends ConveyorFixed {
         sprites = new ArrayList<>();
         //for
         try {
-            spriteUp = ImageIO.read(new File("resource/conveyor/switch/switch_up.png"));
-            spriteDown = ImageIO.read(new File("resource/conveyor/switch/switch_down.png"));
-            spriteLeft = ImageIO.read(new File("resource/conveyor/switch/switch_left.png"));
-            spriteRight = ImageIO.read(new File("resource/conveyor/switch/switch_right.png"));
+            spriteUp = ImageIO.read(getClass().getResource("/resource/conveyor/switch/switch_up.png"));
+            spriteDown = ImageIO.read(getClass().getResource("/resource/conveyor/switch/switch_down.png"));
+            spriteLeft = ImageIO.read(getClass().getResource("/resource/conveyor/switch/switch_left.png"));
+            spriteRight = ImageIO.read(getClass().getResource("/resource/conveyor/switch/switch_right.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
